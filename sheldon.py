@@ -5,6 +5,7 @@ import re
 import sys
 import unicodedata
 import requests
+import uktime
 from bs4 import BeautifulSoup
 from twisted.internet import reactor
 from twisted.internet import protocol
@@ -87,11 +88,19 @@ class TwistedBot(irc.IRCClient):
              helpz = self._get_helpz()
              self.msg(CHANNEL, helpz)
 
+        if 'uktime' in msg.lower():
+             timez = self._get_time()
+             self.msg(CHANNEL, timez)
+
+
     def _get_help(self):
 	return (" The roommate agreement is here: http://10.190.239.14")
     
     def _get_helpz(self):
 	return ("Do you really need Sheldon's help???")
+
+    def _get_time(self):
+        return uktime.localtime
 
 
 class TwistedBotFactory(protocol.ClientFactory):
